@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geppetto Craft — Çocuk Çizimleri 3D Figüre Dönüşüyor</title>
+<meta name="description" content="Çocuğunuzun çizimini ya da yıllar önce kendinizin çizdiği resmi 3 boyutlu el yapımı figüre dönüştürüyoruz. Özgün, kişisel, kalıcı.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Nunito:wght@300;400;600;700;800&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --cream:      #F8F4EE;
+  --off-white:  #FDFBF8;
+  --parchment:  #EDE5D8;
+  --parchment2: #E2D8C8;
+  --navy:       #0F1E33;
+  --navy-mid:   #1A2F4A;
+  --navy-light: #243D5E;
+  --gold:       #B8852A;
+  --gold-rich:  #C9963A;
+  --gold-pale:  #F0DEB8;
+  --charcoal:   #2C2018;
+  --muted:      #7A6A58;
+  --dim:        #B0A090;
+  --border:     rgba(184,133,42,0.2);
+  --border-soft:rgba(184,133,42,0.1);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--off-white);
+  color: var(--charcoal);
+  overflow-x: hidden;
+}
+
+/* ══════════ NAV ══════════ */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.1rem 5rem;
+  background:rgba(253,251,248,0.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border-soft);
+  transition:padding .3s;
+}
+
+.nav-logo {
+  font-family:'Cinzel', serif;
+  font-size:1.2rem; letter-spacing:.15em;
+  color:var(--navy); text-decoration:none;
+  display:flex; align-items:center; gap:.6rem;
+}
+.nav-logo span { color:var(--gold); }
+
+.nav-links { display:flex; gap:2.5rem; list-style:none; }
+.nav-links a {
+  font-size:.75rem; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted);
+  text-decoration:none; transition:color .2s;
+}
+.nav-links a:hover { color:var(--gold); }
+
+.nav-actions { display:flex; gap:.7rem; }
+
+.nav-btn {
+  display:inline-flex; align-items:center; gap:.4rem;
+  padding:.45rem 1.1rem;
+  font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  text-decoration:none; border-radius:2px;
+  transition:all .2s;
+}
+
+.nav-btn-ig {
+  background:linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color:white;
+}
+.nav-btn-ig:hover { opacity:.9; transform:translateY(-1px); }
+
+.nav-btn-wa {
+  background:#25D366;
+  color:white;
+}
+.nav-btn-wa:hover { background:#1ebe5a; transform:translateY(-1px); }
+
+/* ══════════ HERO ══════════ */
+.hero {
+  min-height:100vh;
+  display:grid; grid-template-columns:1fr 1fr;
+  background:var(--cream);
+  padding-top:5rem;
+  position:relative; overflow:hidden;
+}
+
+.hero::before {
+  content:'';
+  position:absolute; bottom:0; right:0;
+  width:50%; height:100%;
+  background:var(--parchment);
+  clip-path:polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+  z-index:0;
+}
+
+.hero-text {
+  display:flex; flex-direction:column; justify-content:center;
+  padding:5rem 4rem 5rem 8rem;
+  position:relative; z-index:2;
+}
+
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:.7rem;
+  font-size:.68rem; font-weight:800; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:1.8rem;
+}
+
+.hero-eyebrow::before {
+  content:''; width:2rem; height:1.5px; background:var(--gold);
+}
+
+h1.hero-title {
+  font-family:'Cormorant Garamond', serif;
+  font-size:clamp(3rem,5vw,4.8rem);
+  font-weight:300; line-height:1.1;
+  color:var(--navy);
+}
+
+h1.hero-title em {
+  font-style:italic; color:var(--gold);
+  display:block;
+}
+
+.hero-sub {
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic; font-size:1.15rem; font-weight:300;
+  color:var(--muted); line-height:1.9;
+  max-width:440px; margin:1.8rem 0 2.8rem;
+}
+
+.hero-ctas {
+  display:flex; gap:1rem; flex-wrap:wrap;
+  margin-bottom:3rem;
+}
+
+.btn-ig {
+  display:inline-flex; align-items:center; gap:.6rem;
+  background:linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color:white; padding:.9rem 2rem;
+  font-size:.85rem; font-weight:700; letter-spacing:.04em;
+  text-decoration:none; border-radius:3px;
+  transition:opacity .2s, transform .2s;
+  box-shadow:0 4px 20px rgba(220,39,67,.25);
+}
+.btn-ig:hover { opacity:.9; transform:translateY(-2px); }
+
+.btn-wa {
+  display:inline-flex; align-items:center; gap:.6rem;
+  background:#25D366; color:white;
+  padding:.9rem 2rem;
+  font-size:.85rem; font-weight:700;
+  text-decoration:none; border-radius:3px;
+  transition:all .2s;
+  box-shadow:0 4px 20px rgba(37,211,102,.2);
+}
+.btn-wa:hover { background:#1ebe5a; transform:translateY(-2px); }
+
+.hero-trust {
+  display:flex; gap:2.5rem;
+  padding-top:2rem;
+  border-top:1px solid var(--border-soft);
+}
+
+.trust-item {
+  display:flex; flex-direction:column;
+}
+
+.trust-num {
+  font-family:'Cormorant Garamond', serif;
+  font-size:1.8rem; font-weight:600; color:var(--gold);
+  line-height:1;
+}
+
+.trust-label {
+  font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--dim); margin-top:.2rem;
+}
+
+/* Hero visual */
+.hero-visual {
+  position:relative; z-index:2;
+  display:flex; align-items:center; justify-content:center;
+  padding:4rem 3rem;
+}
+
+.vis-stack {
+  position:relative; width:360px; height:460px;
+}
+
+.vis-card {
+  position:absolute; border-radius:6px;
+  background:white;
+  border:1px solid var(--border);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:.5rem;
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic; font-size:.85rem;
+  color:var(--dim);
+}
+
+.vis-icon { font-size:2rem; opacity:.5; }
+
+.vis-main {
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:240px; height:310px;
+  box-shadow:0 20px 60px rgba(15,30,51,.15), 0 0 0 1px var(--border);
+  z-index:3;
+}
+
+.vis-secondary {
+  top:8%; left:2%;
+  width:135px; height:175px;
+  transform:rotate(-5deg);
+  z-index:2; opacity:.8;
+  box-shadow:0 10px 30px rgba(15,30,51,.1);
+}
+
+.vis-tertiary {
+  bottom:5%; right:2%;
+  width:130px; height:165px;
+  transform:rotate(4deg);
+  z-index:2; opacity:.8;
+  box-shadow:0 10px 30px rgba(15,30,51,.1);
+}
+
+.vis-label {
+  position:absolute; bottom:-1rem; right:-1rem;
+  background:var(--navy); color:var(--gold-pale);
+  padding:.4rem 1rem;
+  font-family:'Nunito', sans-serif;
+  font-size:.65rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+  border-radius:2px; z-index:5;
+}
+
+/* ══════════ DUAL AUDIENCE ══════════ */
+.audience {
+  display:grid; grid-template-columns:1fr 1fr;
+  border-top:1px solid var(--parchment2);
+}
+
+.aud-panel {
+  padding:6rem 5rem;
+  position:relative; overflow:hidden;
+}
+
+.aud-panel.child { background:var(--off-white); border-right:1px solid var(--parchment2); }
+.aud-panel.adult { background:var(--navy); }
+
+.aud-panel.adult::before {
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse at 80% 20%, rgba(184,133,42,.08) 0%, transparent 60%);
+}
+
+.aud-tag {
+  font-size:.65rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--gold);
+  border:1.5px solid var(--border);
+  padding:.25rem .8rem; border-radius:2px;
+  display:inline-block; margin-bottom:1.5rem;
+  background:var(--gold-pale);
+}
+
+.aud-panel.adult .aud-tag {
+  background:rgba(184,133,42,.1);
+  color:var(--gold-rich);
+  border-color:rgba(184,133,42,.3);
+}
+
+.aud-title {
+  font-family:'Cormorant Garamond', serif;
+  font-size:2rem; font-weight:400; line-height:1.3;
+  margin-bottom:1rem;
+}
+
+.aud-panel.child .aud-title { color:var(--navy); }
+.aud-panel.adult .aud-title { color:white; }
+
+.aud-body {
+  font-size:.92rem; font-weight:300; line-height:1.9;
+  max-width:380px; margin-bottom:2rem;
+}
+
+.aud-panel.child .aud-body { color:var(--muted); }
+.aud-panel.adult .aud-body { color:rgba(255,255,255,.55); }
+
+.aud-link {
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-size:.8rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+  text-decoration:none; transition:gap .2s;
+}
+
+.aud-panel.child .aud-link { color:var(--gold); }
+.aud-panel.adult .aud-link { color:var(--gold-rich); }
+.aud-link:hover { gap:.9rem; }
+
+/* ══════════ HOW IT WORKS ══════════ */
+.how {
+  padding:9rem 8rem;
+  background:var(--cream);
+  text-align:center; position:relative; overflow:hidden;
+}
+
+.sec-label {
+  font-size:.68rem; font-weight:800; letter-spacing:.25em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:1rem;
+}
+
+.sec-title {
+  font-family:'Cormorant Garamond', serif;
+  font-size:clamp(2rem,3.5vw,3rem); font-weight:300;
+  color:var(--navy); line-height:1.2; margin-bottom:.8rem;
+}
+
+.sec-sub {
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic; font-size:1.05rem;
+  color:var(--muted); max-width:480px;
+  margin:0 auto 5rem; line-height:1.8;
+}
+
+.steps {
+  display:grid; grid-template-columns:repeat(6,1fr);
+  gap:0; max-width:1100px; margin:0 auto;
+  position:relative;
+}
+
+/* connecting line */
+.steps::after {
+  content:'';
+  position:absolute;
+  top:2.7rem; left:8%; right:8%;
+  height:1px;
+  background:linear-gradient(to right, transparent, var(--parchment2) 20%, var(--parchment2) 80%, transparent);
+}
+
+.step { padding:0 .8rem 2rem; }
+
+.step-num {
+  width:5.4rem; height:5.4rem; border-radius:50%;
+  border:1.5px solid var(--border);
+  background:var(--off-white);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Cormorant Garamond', serif;
+  font-size:1.5rem; font-weight:600; color:var(--gold);
+  margin:0 auto 1.6rem;
+  position:relative; z-index:1;
+  box-shadow:0 4px 20px rgba(184,133,42,.08);
+  transition:box-shadow .3s, border-color .3s;
+}
+
+.step:hover .step-num {
+  border-color:var(--gold-rich);
+  box-shadow:0 4px 30px rgba(184,133,42,.2);
+}
+
+.step-title {
+  font-family:'Cormorant Garamond', serif;
+  font-size:1rem; font-weight:600; color:var(--navy);
+  margin-bottom:.5rem;
+}
+
+.step-body {
+  font-size:.78rem; font-weight:300; color:var(--muted);
+  line-height:1.8;
+}
+
+/* ══════════ PRICING ══════════ */
+.pricing {
+  padding:9rem 8rem;
+  background:var(--off-white);
+}
+
+.pricing-head { text-align:center; margin-bottom:4rem; }
+
+.pricing-note {
+  display:inline-flex; align-items:center; gap:.5rem;
+  background:var(--gold-pale);
+  border:1px solid var(--border);
+  padding:.5rem 1.2rem;
+  border-radius:2px;
+  font-size:.8rem; font-weight:600; color:var(--charcoal);
+  margin-bottom:3rem;
+}
+
+.pricing-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1.5rem; max-width:900px; margin:0 auto 2.5rem;
+}
+
+.price-card {
+  border:1.5px solid var(--parchment2);
+  border-radius:4px; background:white;
+  padding:2.5rem 2rem; text-align:center;
+  transition:transform .3s, box-shadow .3s, border-color .3s;
+  position:relative; overflow:hidden;
+}
+
+.price-card::before {
+  content:''; position:absolute; top:0; left:0; right:0;
+  height:3px; background:transparent; transition:background .3s;
+}
+
+.price-card:hover {
+  transform:translateY(-5px);
+  box-shadow:0 20px 50px rgba(15,30,51,.1);
+  border-color:var(--border);
+}
+
+.price-card:hover::before {
+  background:linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+.price-card.featured {
+  border-color:var(--gold-rich);
+  background:var(--navy);
+}
+
+.price-card.featured::before {
+  background:linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+.price-badge {
+  position:absolute; top:1rem; right:1rem;
+  background:var(--gold); color:var(--navy);
+  font-size:.6rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+  padding:.2rem .7rem; border-radius:1px;
+}
+
+.price-size {
+  font-size:.65rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:1.2rem;
+}
+
+.price-card.featured .price-size { color:var(--gold-rich); }
+
+.price-amount {
+  font-family:'Cormorant Garamond', serif;
+  font-size:3rem; font-weight:600; color:var(--navy); line-height:1;
+  margin-bottom:.3rem;
+}
+
+.price-card.featured .price-amount { color:white; }
+
+.price-note { font-size:.75rem; color:var(--dim); margin-bottom:2rem; }
+.price-card.featured .price-note { color:rgba(255,255,255,.4); }
+
+.price-feats {
+  list-style:none; text-align:left;
+  border-top:1px solid var(--parchment2);
+  padding-top:1.5rem; margin-bottom:2rem;
+}
+
+.price-card.featured .price-feats { border-color:rgba(255,255,255,.08); }
+
+.price-feats li {
+  font-size:.8rem; font-weight:400;
+  color:var(--muted);
+  padding:.45rem 0 .45rem 1.3rem;
+  border-bottom:1px solid var(--parchment2);
+  position:relative;
+}
+
+.price-card.featured .price-feats li {
+  color:rgba(255,255,255,.65);
+  border-color:rgba(255,255,255,.06);
+}
+
+.price-feats li::before {
+  content:'—'; position:absolute; left:0;
+  color:var(--gold); font-size:.8rem;
+}
+
+.btn-price {
+  display:block; text-align:center;
+  padding:.8rem; border-radius:2px;
+  font-size:.78rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  text-decoration:none; transition:all .2s;
+}
+
+.btn-price-outline {
+  border:1.5px solid var(--border);
+  color:var(--navy);
+}
+.btn-price-outline:hover { border-color:var(--gold-rich); background:var(--gold-pale); }
+
+.btn-price-solid { background:var(--gold); color:var(--navy); }
+.btn-price-solid:hover { background:var(--gold-rich); }
+
+.pricing-disclaimer {
+  text-align:center;
+  max-width:600px; margin:0 auto;
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic; font-size:1rem;
+  color:var(--muted); line-height:1.8;
+  padding:2rem;
+  border:1px solid var(--parchment2);
+  border-radius:4px;
+  background:var(--cream);
+}
+
+/* ══════════ PROCESS DETAIL ══════════ */
+.process {
+  padding:9rem 8rem;
+  background:var(--navy);
+  position:relative; overflow:hidden;
+}
+
+.process::before {
+  content:'';
+  position:absolute; top:-20%; right:-10%;
+  width:50vw; height:50vw; border-radius:50%;
+  background:radial-gradient(circle, rgba(184,133,42,.05) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+.process-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:6rem; align-items:center;
+  max-width:1100px; margin:0 auto;
+}
+
+.process-text .sec-title { color:white; }
+.process-text .sec-label { color:var(--gold); }
+.process-text .sec-sub {
+  color:rgba(255,255,255,.5);
+  margin:0 0 3rem;
+  text-align:left;
+}
+
+.process-steps { display:flex; flex-direction:column; gap:0; }
+
+.proc-item {
+  display:flex; gap:1.5rem;
+  padding:1.5rem 0;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.proc-num {
+  font-family:'Cormorant Garamond', serif;
+  font-size:2rem; font-weight:300;
+  color:rgba(184,133,42,.3); line-height:1;
+  flex-shrink:0; width:2rem; text-align:right;
+  transition:color .3s;
+}
+
+.proc-item:hover .proc-num { color:var(--gold); }
+
+.proc-content {}
+
+.proc-title {
+  font-family:'Cormorant Garamond', serif;
+  font-size:1.05rem; font-weight:600;
+  color:rgba(255,255,255,.9); margin-bottom:.3rem;
+}
+
+.proc-body {
+  font-size:.82rem; font-weight:300;
+  color:rgba(255,255,255,.45); line-height:1.8;
+}
+
+.process-visual {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:1rem;
+}
+
+.proc-img {
+  aspect-ratio:1;
+  border-radius:4px;
+  background:var(--navy-light);
+  border:1px solid rgba(184,133,42,.15);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic; color:rgba(255,255,255,.2);
+  font-size:.8rem; gap:.5rem;
+  transition:border-color .3s;
+}
+
+.proc-img:hover { border-color:rgba(184,133,42,.35); }
+.proc-img .p-icon { font-size:1.8rem; opacity:.4; }
+
+.proc-img:nth-child(1) { grid-column:1/-1; aspect-ratio:2/1; }
+
+/* ══════════ GALLERY ══════════ */
+.gallery {
+  padding:9rem 8rem;
+  background:var(--cream);
+}
+
+.gallery-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1.5rem; max-width:1100px; margin:0 auto;
+}
+
+.gal-item {
+  border-radius:4px; overflow:hidden;
+  border:1px solid var(--parchment2);
+  cursor:pointer; position:relative;
+  background:var(--parchment);
+}
+
+.gal-item:nth-child(1) { aspect-ratio:3/4; }
+.gal-item:nth-child(2) { aspect-ratio:3/4; margin-top:2.5rem; }
+.gal-item:nth-child(3) { aspect-ratio:3/4; margin-top:-1.5rem; }
+
+.gal-body {
+  width:100%; height:100%;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  color:var(--dim); font-family:'Cormorant Garamond', serif;
+  font-style:italic; text-align:center; padding:2rem; gap:.6rem;
+  transition:transform .5s;
+}
+
+.gal-item:hover .gal-body { transform:scale(1.04); }
+.gal-icon { font-size:2.5rem; opacity:.35; }
+
+.gal-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(15,30,51,.85) 0%, transparent 55%);
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:1.5rem; opacity:0; transition:opacity .3s;
+}
+
+.gal-item:hover .gal-overlay { opacity:1; }
+
+.gal-caption {
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic; font-size:.9rem; color:white;
+}
+
+.gal-tag {
+  font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--gold-rich); margin-top:.2rem;
+}
+
+/* ══════════ TESTIMONIALS ══════════ */
+.testimonials {
+  padding:9rem 8rem;
+  background:var(--off-white); text-align:center;
+}
+
+.testi-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1.5rem; max-width:1100px; margin:0 auto;
+}
+
+.testi-card {
+  background:white;
+  border:1.5px solid var(--parchment2);
+  border-radius:4px; padding:2.5rem 2rem;
+  text-align:left; transition:border-color .3s, transform .3s;
+}
+
+.testi-card:hover { border-color:var(--border); transform:translateY(-3px); }
+
+.testi-stars { color:var(--gold); font-size:.9rem; letter-spacing:.15em; margin-bottom:1.2rem; }
+
+.testi-q {
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic; font-size:1.05rem; font-weight:400;
+  color:var(--charcoal); line-height:1.8; margin-bottom:1.8rem;
+}
+
+.testi-line { width:2rem; height:1.5px; background:var(--gold); opacity:.5; margin-bottom:1.2rem; }
+
+.testi-name {
+  font-size:.75rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--navy);
+}
+
+.testi-role { font-size:.72rem; color:var(--dim); margin-top:.2rem; }
+
+/* ══════════ FAQ ══════════ */
+.faq-section {
+  padding:9rem 0;
+  background:var(--cream);
+}
+
+.faq-inner { max-width:720px; margin:0 auto; padding:0 3rem; }
+.faq-head { text-align:center; margin-bottom:3.5rem; }
+
+.faq-item { border-bottom:1px solid var(--parchment2); }
+
+.faq-q {
+  width:100%; display:flex; align-items:center; justify-content:space-between;
+  padding:1.5rem 0; background:none; border:none; cursor:pointer;
+  font-family:'Cormorant Garamond', serif;
+  font-size:1.1rem; font-weight:600; color:var(--navy); text-align:left;
+}
+
+.faq-icon {
+  width:1.6rem; height:1.6rem; border-radius:50%;
+  border:1.5px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--gold); font-size:1.1rem; font-weight:300;
+  flex-shrink:0; margin-left:1rem;
+  transition:transform .3s, background .2s;
+}
+
+.faq-item.open .faq-icon { transform:rotate(45deg); background:var(--gold-pale); }
+
+.faq-a {
+  font-size:.88rem; font-weight:300; color:var(--muted);
+  line-height:1.9; max-height:0; overflow:hidden;
+  transition:max-height .4s ease, padding .3s;
+}
+
+.faq-item.open .faq-a { max-height:300px; padding-bottom:1.5rem; }
+
+/* ══════════ CTA BAND ══════════ */
+.cta-band {
+  padding:8rem;
+  background:var(--navy);
+  text-align:center; position:relative; overflow:hidden;
+}
+
+.cta-band::before {
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse at 50% 120%, rgba(184,133,42,.1) 0%, transparent 55%);
+  pointer-events:none;
+}
+
+.cta-band .sec-title { color:white; margin-bottom:.8rem; }
+.cta-band .sec-title em { font-style:italic; color:var(--gold-rich); }
+.cta-band .sec-sub { color:rgba(255,255,255,.5); }
+
+.cta-btns {
+  display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;
+  margin-top:3rem;
+}
+
+.btn-large-ig {
+  display:inline-flex; align-items:center; gap:.7rem;
+  background:linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color:white; padding:1.1rem 2.5rem;
+  font-size:.88rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+  text-decoration:none; border-radius:3px;
+  transition:opacity .2s, transform .2s;
+  box-shadow:0 6px 30px rgba(220,39,67,.3);
+}
+.btn-large-ig:hover { opacity:.9; transform:translateY(-2px); }
+
+.btn-large-wa {
+  display:inline-flex; align-items:center; gap:.7rem;
+  background:#25D366; color:white;
+  padding:1.1rem 2.5rem;
+  font-size:.88rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+  text-decoration:none; border-radius:3px;
+  transition:all .2s;
+  box-shadow:0 6px 30px rgba(37,211,102,.25);
+}
+.btn-large-wa:hover { background:#1ebe5a; transform:translateY(-2px); }
+
+/* ══════════ FOOTER ══════════ */
+footer {
+  background:var(--navy-mid);
+  border-top:1px solid rgba(184,133,42,.1);
+  padding:5rem 8rem 3rem;
+  display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:4rem;
+}
+
+.foot-brand {
+  font-family:'Cinzel', serif;
+  font-size:1.2rem; letter-spacing:.15em; color:white;
+  margin-bottom:.8rem;
+}
+.foot-brand span { color:var(--gold); }
+
+.foot-tagline {
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic; font-size:.9rem;
+  color:rgba(255,255,255,.35); line-height:1.7; margin-bottom:1.8rem;
+}
+
+.foot-social { display:flex; gap:.7rem; }
+
+.foot-social a {
+  width:2.2rem; height:2.2rem;
+  border:1px solid rgba(184,133,42,.2); border-radius:2px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.65rem; font-weight:800; color:rgba(255,255,255,.4);
+  text-decoration:none; transition:all .2s;
+}
+
+.foot-social a:hover { border-color:var(--gold); color:var(--gold); background:rgba(184,133,42,.08); }
+
+.foot-col h4 {
+  font-size:.62rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:1.4rem;
+}
+
+.foot-col ul { list-style:none; }
+.foot-col li { margin-bottom:.7rem; }
+.foot-col a {
+  font-size:.83rem; font-weight:300;
+  color:rgba(255,255,255,.4); text-decoration:none; transition:color .2s;
+}
+.foot-col a:hover { color:white; }
+
+.foot-bottom {
+  grid-column:1/-1;
+  border-top:1px solid rgba(255,255,255,.05);
+  padding-top:2rem;
+  display:flex; justify-content:space-between;
+  font-size:.72rem; color:rgba(255,255,255,.2);
+}
+
+/* ══════════ ANIMATIONS ══════════ */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.hero-eyebrow { animation:fadeUp .5s .1s both; }
+.hero-title   { animation:fadeUp .5s .22s both; }
+.hero-sub     { animation:fadeUp .5s .36s both; }
+.hero-ctas    { animation:fadeUp .5s .5s both; }
+.hero-trust   { animation:fadeUp .5s .64s both; }
+.hero-visual  { animation:fadeUp .7s .3s both; }
+
+.reveal {
+  opacity:1; transform:translateY(0);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.reveal.hidden {
+  opacity:0; transform:translateY(22px);
+}
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ══════════ RESPONSIVE ══════════ */
+@media(max-width:1100px) {
+  nav { padding:1.1rem 2rem; }
+  .nav-links { display:none; }
+  .hero { grid-template-columns:1fr; }
+  .hero::before { display:none; }
+  .hero-text { padding:7rem 2.5rem 4rem; }
+  .hero-visual { display:none; }
+  .audience { grid-template-columns:1fr; }
+  .aud-panel { padding:4rem 2.5rem; }
+  .how,.pricing,.gallery,.testimonials,.process,.cta-band { padding:6rem 2.5rem; }
+  .steps { grid-template-columns:repeat(3,1fr); }
+  .steps::after { display:none; }
+  .pricing-grid { grid-template-columns:1fr; max-width:360px; }
+  .gallery-grid { grid-template-columns:1fr 1fr; }
+  .gal-item:nth-child(2),.gal-item:nth-child(3) { margin-top:0; }
+  .testi-grid { grid-template-columns:1fr; }
+  .process-grid { grid-template-columns:1fr; gap:3rem; }
+  .process-visual { display:none; }
+  footer { grid-template-columns:1fr 1fr; padding:3rem 2.5rem 2rem; }
+  .foot-bottom { grid-column:1/-1; }
+  .faq-inner { padding:0 2rem; }
+}
+
+/* ══════════ COUNTER ══════════ */
+.counter-section {
+  background: var(--navy);
+  border-top: 1px solid rgba(184,133,42,.12);
+  border-bottom: 1px solid rgba(184,133,42,.12);
+  padding: 4rem 8rem;
+}
+
+.counter-inner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  gap: 0;
+}
+
+.counter-divider {
+  width: 1px;
+  height: 4rem;
+  background: rgba(184,133,42,.2);
+  margin: 0 2rem;
+}
+
+.counter-item {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+}
+
+.counter-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1;
+  display: inline-block;
+}
+
+.counter-suffix {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  color: var(--gold);
+  margin-top: .5rem;
+  line-height: 1;
+}
+
+/* wrap num + suffix side by side for % item */
+.counter-item:nth-child(5) {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0;
+}
+
+.counter-item:nth-child(5) .counter-label {
+  width: 100%;
+  text-align: center;
+}
+
+.counter-label {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-top: .4rem;
+}
+
+/* Live / last order item */
+.counter-item-last {
+  position: relative;
+}
+
+.counter-live-dot {
+  width: .55rem;
+  height: .55rem;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 8px rgba(74,222,128,.6);
+  animation: pulse-green 2s ease-in-out infinite;
+  margin-bottom: .2rem;
+}
+
+@keyframes pulse-green {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(74,222,128,.6); }
+  50% { opacity: .6; box-shadow: 0 0 16px rgba(74,222,128,.9); }
+}
+
+.counter-live-text {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.counter-live-time {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #4ade80;
+  line-height: 1;
+  margin: .2rem 0;
+}
+
+@media(max-width:1100px) {
+  .counter-section { padding: 3rem 2.5rem; }
+  .counter-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .counter-divider { display: none; }
+}
+
+@media(max-width:600px) {
+  .counter-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .counter-num { font-size: 2.8rem; }
+}
+
+@media(max-width:600px) {
+  .steps { grid-template-columns:1fr 1fr; }
+  .hero-trust { gap:1.5rem; }
+  .cta-btns { flex-direction:column; align-items:center; }
+}
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">GEPPETTO <span>CRAFT</span></a>
+  <ul class="nav-links">
+    <li><a href="#nasil-calisir">Nasıl Çalışır?</a></li>
+    <li><a href="#fiyatlar">Fiyatlar</a></li>
+    <li><a href="#galeri">Galeri</a></li>
+    <li><a href="#sss">SSS</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="https://www.instagram.com/geppetto.craft/" target="_blank" class="nav-btn nav-btn-ig">
+      📸 Instagram
+    </a>
+    <a href="https://api.whatsapp.com/send/?phone=905461825113" target="_blank" class="nav-btn nav-btn-wa">
+      💬 WhatsApp
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">El yapımı · Kişisel · Kalıcı</div>
+    <h1 class="hero-title">
+      Bir çizim,<br>
+      <em>sonsuz bir hatıra.</em>
+    </h1>
+    <p class="hero-sub">
+      Çocuğunuzun hayal dünyasını — ya da yıllar önce kendinizin çizdiği o resmi — elle şekillendirip 3 boyutlu bir figüre dönüştürüyoruz.
+    </p>
+    <div class="hero-ctas">
+      <a href="https://www.instagram.com/geppetto.craft/" target="_blank" class="btn-ig">
+        📸 Instagram'dan Sipariş Ver
+      </a>
+      <a href="https://api.whatsapp.com/send/?phone=905461825113" target="_blank" class="btn-wa">
+        💬 WhatsApp
+      </a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item">
+        <span class="trust-num">%100</span>
+        <span class="trust-label">El İşçiliği</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-num">15 gün</span>
+        <span class="trust-label">Ort. Teslimat</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-num">🌿</span>
+        <span class="trust-label">Doğal Malzeme</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="vis-stack">
+      <div class="vis-card vis-secondary">
+        <div class="vis-icon">✏️</div>
+        Çizim
+      </div>
+      <div class="vis-card vis-main">
+        <div class="vis-icon">🎨</div>
+        Ana Ürün Görseli
+        <div class="vis-label">3D Figür</div>
+      </div>
+      <div class="vis-card vis-tertiary">
+        <div class="vis-icon">🖌️</div>
+        Detay
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DUAL AUDIENCE -->
+<section class="audience">
+  <div class="aud-panel child">
+    <span class="aud-tag">Ebeveynler için</span>
+    <h2 class="aud-title">Çocuğunuzun hayal gücü gerçek olsun</h2>
+    <p class="aud-body">Küçük ellerin kaleme döktüğü o sevimli canavarlar, prensesler ve uzay gemileri artık bir çekmeceye gömülmek zorunda değil. Onları tutabileceği, gösterebileceği, her gün görebileceği bir figüre dönüştürüyoruz.</p>
+    <a href="https://www.instagram.com/geppetto.craft/" target="_blank" class="aud-link">Instagram'dan sipariş ver →</a>
+  </div>
+  <div class="aud-panel adult">
+    <span class="aud-tag">Nostalji arayanlar için</span>
+    <h2 class="aud-title">O eski çizim hâlâ bir yerde saklıdır</h2>
+    <p class="aud-body">Yıllar önce çizdiğiniz o resmi çekip çıkarın. Çocukluğunuzun hayal gücünü bugünün el sanatıyla buluşturalım. Kendinize ya da sevdiklerinize dünyada tek olan bir hediye.</p>
+    <a href="https://www.instagram.com/geppetto.craft/" target="_blank" class="aud-link">Çizimimi göndermek istiyorum →</a>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="nasil-calisir">
+  <p class="sec-label">Süreç</p>
+  <h2 class="sec-title">Altı Adımda Figüre</h2>
+  <p class="sec-sub">Çiziminiz bize ulaştığı andan kapınıza gelene kadar.</p>
+
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <h3 class="step-title">Çizimi Gönderin</h3>
+      <p class="step-body">Instagram veya WhatsApp üzerinden çizimin net bir fotoğrafını bize iletiyorsunuz.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <h3 class="step-title">Fiyat Teklifi</h3>
+      <p class="step-body">Karakter sayısı ve renk detayına göre fiyat teklifini gönderiyoruz.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <h3 class="step-title">Dijital Modelleme</h3>
+      <p class="step-body">Çiziminiz profesyonel yazılımla 3 boyutlu modellenir. Dijital önizleme onayınıza sunulur.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">4</div>
+      <h3 class="step-title">Üretim</h3>
+      <p class="step-body">Bitkisel kaynaklı, çocuklar için güvenli doğal malzeme ile özenle üretilir.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">5</div>
+      <h3 class="step-title">El Boyama</h3>
+      <p class="step-body">Çiziminize sadık kalınarak elle boyanır ve koruyucu ile kaplanır. Gerekirse ara onay alınır.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">6</div>
+      <h3 class="step-title">Kargo</h3>
+      <p class="step-body">Özenle paketlenip Türkiye geneline ücretsiz kargo ile gönderiyoruz.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="fiyatlar">
+  <div class="pricing-head reveal">
+    <p class="sec-label">Fiyatlandırma</p>
+    <h2 class="sec-title">Çiziminize Özel Fiyat</h2>
+    <p class="sec-sub">Fiyat; figür boyutuna, karakter sayısına ve renk detayına göre belirlenir. Aşağıdaki rakamlar başlangıç fiyatlarıdır.</p>
+    <div class="pricing-note">
+      💬 Çiziminizi gönderin — size 24 saat içinde fiyat teklifini iletelim.
+    </div>
+  </div>
+
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <p class="price-size">15 cm</p>
+      <p class="price-amount">1.500₺</p>
+      <p class="price-note">başlangıç fiyatı · kargo dahil</p>
+      <ul class="price-feats">
+        <li>Basit, tek renkli karakterler</li>
+        <li>Dijital 3D önizleme</li>
+        <li>Revizyon hakkı</li>
+        <li>Türkiye geneli ücretsiz kargo</li>
+      </ul>
+      <a href="https://www.instagram.com/geppetto.craft/" target="_blank" class="btn-price btn-price-outline">Fiyat teklifi al</a>
+    </div>
+
+    <div class="price-card featured reveal">
+      <span class="price-badge">En Çok Tercih</span>
+      <p class="price-size">18 cm</p>
+      <p class="price-amount">1.650₺</p>
+      <p class="price-note">başlangıç fiyatı · kargo dahil</p>
+      <ul class="price-feats">
+        <li>Tek veya çok karakterli</li>
+        <li>Renkli boyama dahil</li>
+        <li>Dijital 3D önizleme</li>
+        <li>Boyama ara onayı</li>
+        <li>Ücretsiz kargo</li>
+      </ul>
+      <a href="https://www.instagram.com/geppetto.craft/" target="_blank" class="btn-price btn-price-solid">Fiyat teklifi al</a>
+    </div>
+
+    <div class="price-card reveal">
+      <p class="price-size">23 cm</p>
+      <p class="price-amount">2.100₺</p>
+      <p class="price-note">başlangıç fiyatı · kargo dahil</p>
+      <ul class="price-feats">
+        <li>Büyük / detaylı çizimler</li>
+        <li>Tam renkli boyama</li>
+        <li>Dijital 3D önizleme</li>
+        <li>Boyama ara onayı</li>
+        <li>Ücretsiz kargo</li>
+      </ul>
+      <a href="https://www.instagram.com/geppetto.craft/" target="_blank" class="btn-price btn-price-outline">Fiyat teklifi al</a>
+    </div>
+  </div>
+
+  <p class="pricing-disclaimer reveal">
+    Karakter sayısı, renk çeşitliliği ve detay seviyesine göre fiyat değişiklik gösterebilir.
+    Çiziminizi Instagram veya WhatsApp üzerinden gönderin, size özel teklifi hazırlayalım.
+  </p>
+</section>
+
+<!-- PROCESS DETAIL -->
+<section class="process" id="uretim">
+  <div class="process-grid">
+    <div class="process-text">
+      <p class="sec-label">Nasıl Yapıyoruz?</p>
+      <h2 class="sec-title" style="color:white;">El sanatı ile<br><em style="color:var(--gold-rich);">dijital hassasiyet.</em></h2>
+      <p class="sec-sub">Her figür sıfırdan tasarlanır. Seri üretim asla.</p>
+
+      <div class="process-steps">
+        <div class="proc-item">
+          <span class="proc-num">01</span>
+          <div class="proc-content">
+            <p class="proc-title">Dijital Modelleme</p>
+            <p class="proc-body">Çiziminiz profesyonel yazılımla 3 boyutlu modellenir. Dijital önizleme size gönderilir; onayınız olmadan hiçbir şey üretilmez.</p>
+          </div>
+        </div>
+        <div class="proc-item">
+          <span class="proc-num">02</span>
+          <div class="proc-content">
+            <p class="proc-title">Doğal Malzemeyle Üretim</p>
+            <p class="proc-body">Figürler, mısır ve şeker kamışından elde edilen <strong style="color:var(--gold-pale);">bitkisel kaynaklı PLA</strong> ile üretilir. Çocuklar için güvenli, doğaya dost.</p>
+          </div>
+        </div>
+        <div class="proc-item">
+          <span class="proc-num">03</span>
+          <div class="proc-content">
+            <p class="proc-title">El Boyama</p>
+            <p class="proc-body">Çiziminize sadık kalınarak özenle elle boyanır. Karmaşık renklerde ara onay alınır; sürpriz olmaz.</p>
+          </div>
+        </div>
+        <div class="proc-item">
+          <span class="proc-num">04</span>
+          <div class="proc-content">
+            <p class="proc-title">Koruma & Teslimat</p>
+            <p class="proc-body">Son kat koruyucu ile renkler güvence altına alınır. Ardından özenle paketlenip kapınıza gönderilir.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-visual">
+      <div class="proc-img">
+        <div class="p-icon">🖥️</div>
+        3D Model Ekran Görüntüsü
+      </div>
+      <div class="proc-img">
+        <div class="p-icon">🖨️</div>
+        Baskı Aşaması
+      </div>
+      <div class="proc-img">
+        <div class="p-icon">🎨</div>
+        Boyama Detayı
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="galeri">
+  <p class="sec-label" style="text-align:center;">Galeri</p>
+  <h2 class="sec-title" style="text-align:center;">Çizimden Figüre</h2>
+  <p class="sec-sub" style="text-align:center;margin:0 auto 4rem;">Her biri gerçek bir çocuğun ya da büyüğün hayal dünyasından.</p>
+
+  <div class="gallery-grid">
+    <div class="gal-item reveal">
+      <div class="gal-body"><div class="gal-icon">🎨</div>Ürün Görseli 1</div>
+      <div class="gal-overlay">
+        <p class="gal-caption">Zeynep'in ejderhası</p>
+        <p class="gal-tag">7 yaşında çizildi</p>
+      </div>
+    </div>
+    <div class="gal-item reveal">
+      <div class="gal-body"><div class="gal-icon">✏️</div>Ürün Görseli 2</div>
+      <div class="gal-overlay">
+        <p class="gal-caption">Ahmet'in robotu</p>
+        <p class="gal-tag">Nostalji serisi</p>
+      </div>
+    </div>
+    <div class="gal-item reveal">
+      <div class="gal-body"><div class="gal-icon">🖌️</div>Ürün Görseli 3</div>
+      <div class="gal-overlay">
+        <p class="gal-caption">Selin'in prensesi</p>
+        <p class="gal-tag">30 yıl önce çizildi</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <p class="sec-label">Yorumlar</p>
+  <h2 class="sec-title">Onlar Ne Dedi?</h2>
+  <p class="sec-sub" style="max-width:380px;margin:0 auto 4rem;">Gerçek müşteriler, gerçek deneyimler.</p>
+
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <p class="testi-stars">★★★★★</p>
+      <p class="testi-q">"Kızımın çizdiği deniz atını figüre dönüştürdüler. İlk gördüğünde ağladı. Ben de ağladım. Böyle bir hediye hiç almamıştım."</p>
+      <div class="testi-line"></div>
+      <p class="testi-name">Ayşe K.</p>
+      <p class="testi-role">İki çocuk annesi · İstanbul</p>
+    </div>
+    <div class="testi-card reveal">
+      <p class="testi-stars">★★★★★</p>
+      <p class="testi-q">"30 yıl önce çizdiğim bir resmi hâlâ saklıyordum. Anneme doğum günü sürprizi olarak yaptırdım. Hayatımda verdiğim en özel hediyeydi."</p>
+      <div class="testi-line"></div>
+      <p class="testi-name">Murat D.</p>
+      <p class="testi-role">Nostalji serisi · Ankara</p>
+    </div>
+    <div class="testi-card reveal">
+      <p class="testi-stars">★★★★★</p>
+      <p class="testi-q">"Paketleme çok özenli, tam zamanında geldi. Figürün kalitesi beklentilerimin çok üzerindeydi. Kesinlikle tekrar alacağım."</p>
+      <div class="testi-line"></div>
+      <p class="testi-name">Fatma Ş.</p>
+      <p class="testi-role">Mini paket · İzmir</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="sss">
+  <div class="faq-inner">
+    <div class="faq-head">
+      <p class="sec-label">SSS</p>
+      <h2 class="sec-title">Merak Ettikleriniz</h2>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">Çizim ne kadar iyi olmalı? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Hiç önemli değil. Birkaç çizgiden oluşan en basit karalamalar bile güzel figürlere dönüşebilir. "Kötü çizim" diye bir şey yok — her çizim benzersizdir.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">Fiyat nasıl belirleniyor? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Figür boyutu (15/18/23 cm), çizimdeki karakter sayısı ve renk detayına göre fiyat belirleniyor. Tek renkli basit bir karakter en düşük fiyata gelirken, gökkuşağı gibi çok renkli ya da 2+ karakterli çizimler farklı fiyatlandırılıyor. Çiziminizi gönderin, size özel teklif hazırlayalım.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">Eski ve sararmış bir çizim olabilir mi? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Kesinlikle. Çekmecelerde yıllarca saklı kalmış çizimler mükemmel sonuç verir. Sadece net bir fotoğraf yeterli.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">Beğenmezsem ne olur? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Üretim öncesinde dijital modelin önizlemesini görüyorsunuz. Onayınız olmadan hiçbir şey üretilmiyor. Karmaşık renklerde boyama aşamasında da ara onay alabiliyoruz.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">Figürler hangi malzemeden yapılıyor? Çocuklar için güvenli mi? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Figürler, mısır ve şeker kamışından elde edilen bitkisel kaynaklı PLA malzeme ile üretiliyor. Petrol bazlı plastiklerden farklı olarak doğal bir hammaddeye sahip olan PLA, çocuklar için güvenlidir ve çevre dostudur.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">Türkiye'nin her yerine gönderim yapıyor musunuz? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Evet, Türkiye geneline kargo ile gönderiyoruz. Kargo ücreti fiyata dahildir.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q">Teslimat süresi ne kadar? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Ortalama 15 iş günü. Bu süre onay aşamaları ve boyama detayına göre biraz değişebilir. Acele siparişler için doğrudan iletişime geçin.</div>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTER -->
+<section class="counter-section">
+  <div class="counter-inner">
+    <div class="counter-item">
+      <span class="counter-num" data-target="105">0</span>
+      <span class="counter-label">Tamamlanan Figür</span>
+    </div>
+    <div class="counter-divider"></div>
+    <div class="counter-item">
+      <span class="counter-num" data-target="105">0</span>
+      <span class="counter-label">Mutlu Aile</span>
+    </div>
+    <div class="counter-divider"></div>
+    <div class="counter-item">
+      <span class="counter-num" data-target="100">0</span>
+      <span class="counter-suffix">%</span>
+      <span class="counter-label">El İşçiliği</span>
+    </div>
+    <div class="counter-divider"></div>
+    <div class="counter-item counter-item-last">
+      <span class="counter-live-dot"></span>
+      <span class="counter-live-text">Son sipariş</span>
+      <span class="counter-live-time">2 gün önce</span>
+      <span class="counter-label">Türkiye genelinden</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <p class="sec-label" style="color:rgba(255,255,255,.4);">Hemen Başlayın</p>
+  <h2 class="sec-title">O çizim hâlâ <em>bir yerde duruyor.</em></h2>
+  <p class="sec-sub" style="max-width:420px;margin:0 auto;">Bugün bir fotoğraf çekin ve bize gönderin. Gerisi bizde.</p>
+  <div class="cta-btns">
+    <a href="https://www.instagram.com/geppetto.craft/" target="_blank" class="btn-large-ig">
+      📸 Instagram'dan Sipariş Ver
+    </a>
+    <a href="https://api.whatsapp.com/send/?phone=905461825113" target="_blank" class="btn-large-wa">
+      💬 WhatsApp'tan Yaz
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <p class="foot-brand">GEPPETTO <span>CRAFT</span></p>
+    <p class="foot-tagline">Sen hayal et,<br>Geppetto Craft hayalini gerçeğe dönüştürsün.</p>
+    <div class="foot-social">
+      <a href="https://www.instagram.com/geppetto.craft/" target="_blank">IG</a>
+      <a href="https://www.tiktok.com/@geppettocraft" target="_blank">TK</a>
+      <a href="https://www.youtube.com/@GeppettoCraft" target="_blank">YT</a>
+    </div>
+  </div>
+  <div class="foot-col">
+    <h4>Keşfet</h4>
+    <ul>
+      <li><a href="#nasil-calisir">Nasıl Çalışır?</a></li>
+      <li><a href="#fiyatlar">Fiyatlar</a></li>
+      <li><a href="#galeri">Galeri</a></li>
+      <li><a href="#sss">SSS</a></li>
+    </ul>
+  </div>
+  <div class="foot-col">
+    <h4>İletişim</h4>
+    <ul>
+      <li><a href="https://www.instagram.com/geppetto.craft/" target="_blank">Instagram DM</a></li>
+      <li><a href="https://api.whatsapp.com/send/?phone=905461825113" target="_blank">WhatsApp</a></li>
+      <li><a href="/cdn-cgi/l/email-protection#e4838194948190908b879685829090a48389858d88ca878b89">E-posta</a></li>
+    </ul>
+  </div>
+  <div class="foot-col">
+    <h4>Diğer</h4>
+    <ul>
+      <li><a href="#">3D Figürler</a></li>
+      <li><a href="#">Diğer Ürünler</a></li>
+      <li><a href="#">KVKK / Gizlilik</a></li>
+    </ul>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2025 Geppetto Craft. Tüm hakları saklıdır.</span>
+    <span>El yapımı · Türkiye 🇹🇷</span>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        setTimeout(() => {
+          e.target.classList.remove('hidden');
+          e.target.classList.add('visible');
+        }, (parseInt(e.target.dataset.delay) || 0));
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.dataset.delay = (i % 4) * 100;
+    el.classList.add('hidden');
+    obs.observe(el);
+  });
+
+  // Counter animation
+  function animateCounter(el, target, duration) {
+    let start = 0;
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) {
+        el.textContent = target;
+        clearInterval(timer);
+      } else {
+        el.textContent = Math.floor(start);
+      }
+    }, 16);
+  }
+
+  const counterObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.currentTarget.querySelectorAll('.counter-num').forEach(num => {
+          const target = parseInt(num.dataset.target);
+          animateCounter(num, target, 1800);
+        });
+        counterObs.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const counterSection = document.querySelector('.counter-section');
+  if (counterSection) counterObs.observe(counterSection);
+</script>
+</body>
+</html>
